@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restoran Vizitkasi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #1a2e1a 0%, #0a0f0a 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            width: 100%;
+            max-width: 400px;
+            padding: 30px 20px;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            position: relative;
+        }
+
+        .lang-switcher {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .lang-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .lang-btn.active {
+            background: #8bc34a;
+            color: #1a2e1a;
+            border-color: #8bc34a;
+            font-weight: bold;
+        }
+
+        .logo-container {
+            width: 130px;
+            height: 130px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            padding: 4px;
+            background: linear-gradient(45deg, #8bc34a, #2e7d32);
+            box-shadow: 0 0 30px rgba(139, 195, 74, 0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .logo-img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba(255,255,255,0.1);
+        }
+
+        .title {
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            color: #ffffff;
+        }
+
+        .subtitle {
+            font-size: 13px;
+            color: #aed581;
+            letter-spacing: 3px;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        .link-item {
+            background: rgba(255, 255, 255, 0.95);
+            color: #1a2e1a;
+            padding: 14px 18px;
+            margin-bottom: 12px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .link-item:hover {
+            transform: translateY(-3px);
+            background: #ffffff;
+            box-shadow: 0 8px 25px rgba(139, 195, 74, 0.3);
+        }
+
+        .link-item i, .link-item .custom-icon-wrapper {
+            font-size: 18px;
+            width: 38px;
+            height: 38px;
+            background: #f1f8e9;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #388e3c;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .trip-custom-img {
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
+        }
+
+        .link-text {
+            text-align: left;
+            flex-grow: 1;
+        }
+
+        .link-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            color: #666;
+            display: block;
+            font-weight: 700;
+            margin-bottom: 1px;
+        }
+
+        .link-title {
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .arrow-icon {
+            font-size: 12px;
+            color: #ccc;
+        }
+
+        .footer-text {
+            margin-top: 20px;
+            font-size: 11px;
+            color: rgba(255,255,255,0.4);
+        }
+
+        .dev-credit {
+            margin-top: 8px;
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.4);
+            text-decoration: none;
+            display: inline-block;
+            transition: color 0.3s ease, transform 0.3s ease;
+            letter-spacing: 0.5px;
+        }
+
+        .dev-credit:hover {
+            color: #8bc34a;
+            transform: translateY(-1px);
+        }
+
+        /* Maxsus ranglar */
+        .instagram-icon { color: #E1306C !important; background: #fff5f8 !important; }
+        .telegram-icon { color: #0088cc !important; background: #eef7fd !important; }
+        .location-icon { color: #ea4335 !important; background: #fef2f1 !important; }
+        .trip-bg-custom { background: #e5f7f3 !important; }
+        .phone-icon { color: #388e3c !important; background: #f1f8e9 !important; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fade {
+            animation: fadeIn 0.8s ease forwards;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="glass-card animate-fade">
+        <!-- Til almashtirgich -->
+        <div class="lang-switcher">
+            <button onclick="changeLang('uz')" id="btn-uz" class="lang-btn active">UZB</button>
+            <button onclick="changeLang('ru')" id="btn-ru" class="lang-btn">RUS</button>
+            <button onclick="changeLang('en')" id="btn-en" class="lang-btn">ENG</button>
+        </div>
+
+        <!-- Logo -->
+        <div class="logo-container">
+            <img src="https://iili.io/BDtySnV.md.png" alt="Restoran Logotipi" class="logo-img">
+        </div>
+
+        <!-- Sarlavha -->
+        <h1 class="title" id="rest-name">KUKALDOSH</h1>
+        <p class="subtitle" id="rest-sub">Garden Restaurant</p>
+
+        <!-- Linklar -->
+        <div class="links-container">
+            
+            <a href="https://heyzine.com/flip-book/dc92c00aa6.html" class="link-item">
+                <i class="fas fa-utensils"></i>
+                <div class="link-text">
+                    <span class="link-label" id="label-menu">Asosiy menyu</span>
+                    <span class="link-title" id="title-menu">Taomlar ro'yxati</span>
+                </div>
+                <i class="fas fa-chevron-right arrow-icon"></i>
+            </a>
+
+            <a href="https://www.instagram.com/kukaldosh_garden_restaurant?igsh=MTVwNzR3YjVzNTAzeA==" target="_blank" class="link-item">
+                <i class="fab fa-instagram instagram-icon"></i>
+                <div class="link-text">
+                    <span class="link-label" id="label-insta">Instagram</span>
+                    <span class="link-title">Instagram</span>
+                </div>
+                <i class="fas fa-external-link-alt arrow-icon"></i>
+            </a>
+
+            <a href="https://t.me/Kukaldosh_garden_bot" target="_blank" class="link-item">
+                <i class="fab fa-telegram-plane telegram-icon"></i>
+                <div class="link-text">
+                    <span class="link-label" id="label-tele">Telegram</span>
+                    <span class="link-title" id="title-tele">Telegram</span>
+                </div>
+                <i class="fas fa-external-link-alt arrow-icon"></i>
+            </a>
+
+            <a href="https://maps.app.goo.gl/qtDBxGmGytuMBa619?g_st=ic" class="link-item">
+                <i class="fas fa-map-marker-alt location-icon"></i>
+                <div class="link-text">
+                    <span class="link-label" id="label-loc">Manzilimiz</span>
+                    <span class="link-title" id="title-loc">Lokatsiya (Google Maps)</span>
+                </div>
+                <i class="fas fa-map arrow-icon"></i>
+            </a>
+
+            <!-- TripAdvisor Bo'limi Maxsus Logotip bilan -->
+            <a href="https://www.tripadvisor.ru/Restaurant_Review-g303936-d27630485-Reviews-Kukaldosh_Restaurant-Bukhara_Bukhara_Province.html" target="_blank" class="link-item">
+                <div class="custom-icon-wrapper trip-bg-custom">
+                    <img src="https://iili.io/BDpYeje.png">
+                </div>
+                <div class="link-text">
+                    <span class="link-label" id="label-trip">Fikrlar</span>
+                    <span class="link-title" id="title-trip">TripAdvisor</span>
+                </div>
+                <i class="fas fa-external-link-alt arrow-icon"></i>
+            </a>
+
+            <a href="tel:+998 91 246-88-88" class="link-item">
+                <i class="fas fa-phone-alt phone-icon"></i>
+                <div class="link-text">
+                    <span class="link-label" id="label-order">Buyurtma berish</span>
+                    <span class="link-title">+998 91 246-88-88</span>
+                </div>
+                <i class="fas fa-phone arrow-icon"></i>
+            </a>
+
+            <a href="tel:+998 91 403-77-77" class="link-item">
+                <i class="fas fa-headset phone-icon"></i>
+                <div class="link-text">
+                    <span class="link-label" id="label-extra">Qo'shimcha raqam</span>
+                    <span class="link-title">+998 91 403-77-77</span>
+                </div>
+                <i class="fas fa-phone arrow-icon"></i>
+            </a>
+
+
+        </div>
+
+        <p class="footer-text" id="footer-text">© 2026 Barcha huquqlar himoyalangan</p>
+        <a href="https://t.me/smldsgn" target="_blank" class="dev-credit">by sml.dsgn</a>
+    </div>
+
+    <script>
+        const translations = {
+            uz: {
+                name: "KUKALDOSH",
+                sub: "GARDEN RESTARAN",
+                labelMenu: "Asosiy menyu",
+                titleMenu: "Taomlar ro'yxati",
+                labelInsta: "Instagram",
+                labelTele: "Telegram Bot",
+                titleTele: "Restoran Rasmiy Boti",
+                labelLoc: "Manzilimiz",
+                titleLoc: "Lokatsiya (Google Maps)",
+                labelTrip: "Fikrlar",
+                titleTrip: "TripAdvisor sahifamiz",
+                labelOrder: "Biz bilan bog'lanish",
+                labelExtra: "Biz bilan bog'lanish",
+                footer: "© 2026 Barcha huquqlar himoyalangan"
+            },
+            ru: {
+                name: "КУКАЛДОШ",
+                sub: "ГАРДЕН РЕСТОРАН",
+                labelMenu: "Основное меню",
+                titleMenu: "Список блюд",
+                labelInsta: "Инстаграм",
+                labelTele: "Телеграм",
+                titleTele: "Телеграм",
+                labelLoc: "Наш адрес",
+                titleLoc: "Локация (Google Maps)",
+                labelTrip: "Отзывы",
+                titleTrip: "TripAdvisor",
+                labelOrder: "связаться с нами",
+                labelExtra: "связаться с нами",
+                footer: "© 2026 Все права защищены"
+            },
+            en: {
+                name: "KUKALDOSH",
+                sub: "GARDEN RESTAURANT",
+                labelMenu: "Main Menu",
+                titleMenu: "Dishes List",
+                labelInsta: "Instagram",
+                labelTele: "Telegram",
+                titleTele: "Telegram",
+                labelLoc: "Our Address",
+                titleLoc: "Location (Google Maps)",
+                labelTrip: "Reviews",
+                titleTrip: "TripAdvisor Page",
+                labelOrder: "contact us",
+                labelExtra: "contact us",
+                footer: "© 2026 All rights reserved"
+            }
+        };
+
+        function changeLang(lang) {
+            document.getElementById('rest-name').innerText = translations[lang].name;
+            document.getElementById('rest-sub').innerText = translations[lang].sub;
+            document.getElementById('label-menu').innerText = translations[lang].labelMenu;
+            document.getElementById('title-menu').innerText = translations[lang].titleMenu;
+            document.getElementById('label-insta').innerText = translations[lang].labelInsta;
+            document.getElementById('label-tele').innerText = translations[lang].labelTele;
+            document.getElementById('title-tele').innerText = translations[lang].titleTele;
+            document.getElementById('label-loc').innerText = translations[lang].labelLoc;
+            document.getElementById('title-loc').innerText = translations[lang].titleLoc;
+            document.getElementById('label-trip').innerText = translations[lang].labelTrip;
+            document.getElementById('title-trip').innerText = translations[lang].titleTrip;
+            document.getElementById('label-order').innerText = translations[lang].labelOrder;
+            document.getElementById('label-extra').innerText = translations[lang].labelExtra;
+            document.getElementById('footer-text').innerText = translations[lang].footer;
+
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('btn-' + lang).classList.add('active');
+        }
+
+        document.querySelectorAll('.link-item').forEach(item => {
+            item.addEventListener('click', () => {
+                item.style.transform = 'scale(0.98)';
+                setTimeout(() => {
+                    item.style.transform = 'translateY(-3px)';
+                }, 100);
+            });
+        });
+    </script>
+</body>
+</html>
